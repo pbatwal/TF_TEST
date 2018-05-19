@@ -22,7 +22,7 @@ import os
 import tensorflow as tf  # pylint: disable=g-bad-import-order
 
 from official.utils.testing import integration
-from official.wide_deep import wide_deep
+import wide_deep
 
 tf.logging.set_verbosity(tf.logging.ERROR)
 

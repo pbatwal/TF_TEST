@@ -42,9 +42,10 @@ def main(argv):
     classifier = tf.estimator.DNNClassifier(
         feature_columns=my_feature_columns,
         # Two hidden layers of 10 nodes each.
-        hidden_units=[10, 10],
+        hidden_units=[3, 2],
         # The model must choose between 3 classes.
-        n_classes=3)
+        n_classes=3,
+        model_dir="/tmp/iris_model")
 
     # Train the Model.
     classifier.train(
