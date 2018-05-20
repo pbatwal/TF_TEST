@@ -9,7 +9,7 @@ import argparse
 
 import tensorflow as tf
 
-import Data_loader
+import Data_loader_HDCO
 
 # This code defines some of the hyper parameters which can be passed as ARGS
 parser = argparse.ArgumentParser()
@@ -22,7 +22,7 @@ def main(argv):
 
     # Load data from Data Loader class and pass the label column name; 
     # This return tf.Datasets
-    (train_x,train_y), (test_x, test_y) = Data_loader.load_data('A')
+    (train_x,train_y), (test_x, test_y) = Data_loader_HDCO.load_data('Y')
 
     # Feature columns describe how to use the input.
     my_feature_columns = []
@@ -32,16 +32,16 @@ def main(argv):
     # Build a DNNRegressor, with 2x20-unit hidden layers, with the feature columns
     # defined above as input.
     model = tf.estimator.DNNRegressor(
-      hidden_units=[5, 4], feature_columns=my_feature_columns, model_dir="/tmp/Reg_Test1_model")
+      hidden_units=[42], feature_columns=my_feature_columns, model_dir="/tmp/Reg_Test2_model")
 
     # Train the model.
     # By default, the Estimators log output every 100 steps.
-    model.train(input_fn=lambda:Data_loader.train_input_fn(train_x, train_y,
+    model.train(input_fn=lambda:Data_loader_HDCO.train_input_fn(train_x, train_y,
                                                  args.batch_size),
                                                  steps=args.train_steps)
 
     # Evaluate how the model performs on data it has not yet seen.
-    eval_result = model.evaluate(input_fn=lambda:Data_loader.eval_input_fn(test_x, test_y,
+    eval_result = model.evaluate(input_fn=lambda:Data_loader_HDCO.eval_input_fn(test_x, test_y,
                                                  args.batch_size),
                                                  steps=args.train_steps)
 
@@ -50,11 +50,12 @@ def main(argv):
     average_loss = eval_result["average_loss"]
 
     # Convert MSE to Root Mean Square Error (RMSE).
-    print("\nRMS error for the test set: ${:.0f}"
+    print("\nRMS error for the test set:{:.0f}"
             .format(average_loss))
 
 
     #Prediction of  local data here
+    """   
     predict_x = {
         'x': [4.738013833 , 4.08882312, 2.113558065],
         'y': [1.618906654, 0.132222159, 1.00509475]
@@ -66,7 +67,7 @@ def main(argv):
                                                 batch_size=args.batch_size))
 
     print(predictions)
-
+    """
 
     
 if __name__ == "__main__":
