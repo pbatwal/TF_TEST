@@ -75,6 +75,8 @@ def eval_input_fn(features, labels, batch_size):
     # Return the dataset.
     return dataset
 
+"""
 if __name__ == "__main__":
     # run the code here
     print(load_data("A"))
+"""
